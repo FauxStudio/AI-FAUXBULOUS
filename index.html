@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#14081f" />
+  <title>AI-FAUXBULOUS</title>
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./icons/favicon-32.png">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div class="app" id="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brandIcon" aria-hidden="true"></div>
+        <div class="brandText">
+          <div class="brandTitle">AI‑FAUXBULOUS</div>
+          <div class="brandTag">You’ll be FAUXBULOUS in no time!</div>
+        </div>
+      </div>
+      <div class="topActions">
+        <button id="stuckBtn" class="miniBtn miniBtnGold" type="button">STUCK?</button>
+        <div class="langWrap">
+          <button id="langBtn" class="miniBtn" type="button" aria-expanded="false">🌐</button>
+          <div id="langMenu" class="langMenu hidden" role="dialog" aria-label="Language">
+            <div class="langMenuTop">
+              <div class="langMenuTitle">Language</div>
+              <button id="langClose" class="miniBtn" type="button">✕</button>
+            </div>
+            <div class="langMenuBody">
+              <select id="langSelect" class="select" aria-label="Language select"></select>
+              <div class="smallNote">Auto‑matches your phone by default.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="content" id="content">
+      <section class="card">
+        <div class="cardTitle">Mode</div>
+        <div class="row">
+          <button id="modeCustom" class="segBtn active" type="button">CUSTOM</button>
+          <button id="modeSurprise" class="segBtn" type="button">SURPRISE ME</button>
+        </div>
+        <div id="surpriseTip" class="tip hidden">Tip: Surprise Me re‑rolls styling + scene, not your people setup.</div>
+      </section>
+
+      <section class="card">
+        <div class="cardTitle">People Setup</div>
+        <div class="grid2">
+          <div class="field">
+            <div class="label">How many</div>
+            <div class="pillGroup" id="countPills"></div>
+          </div>
+          <div class="field">
+            <div class="label">Gender</div>
+            <div class="pillGroup" id="genderPills"></div>
+          </div>
+        </div>
+
+        <div class="grid2">
+          <div class="field">
+            <div class="label">Names</div>
+            <button id="namesOnImg" class="toggleBtn" type="button" aria-pressed="false">Names on image: OFF</button>
+          </div>
+          <div class="field">
+            <div class="label">Date</div>
+            <button id="dateOnImg" class="toggleBtn" type="button" aria-pressed="false">Date on image: OFF</button>
+          </div>
+        </div>
+
+        <div class="grid2">
+          <div class="field">
+            <div class="label">Signature</div>
+            <button id="sigOnImg" class="toggleBtn" type="button" aria-pressed="true">Signature: ON</button>
+          </div>
+          <div class="field">
+            <div class="label">Layout</div>
+            <button id="layoutPick" class="pickBtn" type="button" data-pick="layout">Pick layout</button>
+          </div>
+        </div>
+
+        <div id="namesInputs" class="field hidden">
+          <div class="label">Person names</div>
+          <div id="nameInputs" class="nameInputs"></div>
+        </div>
+
+        <div class="field">
+          <div class="label">People</div>
+          <div class="pillGroup" id="personTabs"></div>
+        </div>
+      </section>
+
+      <section class="card hidden" id="personCard">
+        <div class="cardTitle" id="personCardTitle">Person</div>
+
+        <div class="stack">
+          <div class="field"><div class="label">Expression</div><button class="pickBtn" type="button" data-pick="expression">Pick expression</button></div>
+          <div class="field"><div class="label">Hair style</div><button class="pickBtn" type="button" data-pick="hairStyle">Pick hair style</button></div>
+
+          <div class="grid2">
+            <div class="field"><div class="label">Hair color</div><button class="pickBtn" type="button" data-pick="hairColor">Pick hair color</button></div>
+            <div class="field"><div class="label">Hair texture</div><button class="pickBtn" type="button" data-pick="hairTexture">Pick hair texture</button></div>
+          </div>
+
+          <div class="grid2">
+            <div class="field">
+              <div class="label">Makeup</div>
+              <button id="mkToggle" class="toggleBtn" type="button" aria-pressed="false">Makeup: OFF</button>
+              <button id="mkPick" class="pickBtn hidden" type="button" data-pick="makeup">Pick makeup</button>
+            </div>
+            <div class="field"><div class="label">Lashes</div><button id="lashToggle" class="toggleBtn" type="button" aria-pressed="false">Lashes: OFF</button></div>
+          </div>
+
+          <div class="grid2">
+            <div class="field"><div class="label">Nails style</div><button class="pickBtn" type="button" data-pick="nailsStyle">Pick nails</button></div>
+            <div class="field"><div class="label">Nails color</div><button class="pickBtn" type="button" data-pick="nailsColor">Pick nail color</button></div>
+          </div>
+
+          <div class="grid2">
+            <div class="field"><div class="label">Pose</div><button id="posePick" class="pickBtn" type="button" data-pick="pose">Pick pose</button></div>
+            <div class="field"><div class="label">Interaction</div><button id="interPick" class="pickBtn" type="button" data-pick="interaction">Pick interaction</button><div class="smallNote">Pick interaction only once (Person 1).</div></div>
+          </div>
+
+          <div class="cardDivider"></div>
+
+          <div class="grid2">
+            <div class="field"><div class="label">Tops</div><button class="pickBtn" type="button" data-pick="tops">Pick tops</button><button id="topsColorBtn" class="pickBtn hidden" type="button" data-pick="topsColor">Pick top color</button></div>
+            <div class="field"><div class="label">Bottoms</div><button class="pickBtn" type="button" data-pick="bottoms">Pick bottoms</button><button id="bottomsColorBtn" class="pickBtn hidden" type="button" data-pick="bottomsColor">Pick bottom color</button></div>
+          </div>
+
+          <div class="grid2">
+            <div class="field"><div class="label">Dresses</div><button class="pickBtn" type="button" data-pick="dresses">Pick dresses</button><button id="dressesColorBtn" class="pickBtn hidden" type="button" data-pick="dressesColor">Pick dress color</button></div>
+            <div class="field"><div class="label">Shoes</div><button class="pickBtn" type="button" data-pick="shoes">Pick shoes</button><button id="shoesColorBtn" class="pickBtn hidden" type="button" data-pick="shoesColor">Pick shoe color</button></div>
+          </div>
+
+          <div class="grid2">
+            <div class="field"><div class="label">Onesies</div><button class="pickBtn" type="button" data-pick="onesies">Pick onesies</button><button id="onesiesColorBtn" class="pickBtn hidden" type="button" data-pick="onesiesColor">Pick onesie color</button></div>
+            <div class="field"><div class="label">Costumes</div><button class="pickBtn" type="button" data-pick="costumes">Pick costumes</button><button id="costumesColorBtn" class="pickBtn hidden" type="button" data-pick="costumesColor">Pick costume color</button></div>
+          </div>
+
+          <div class="grid2">
+            <div class="field"><div class="label">Accessories</div><button class="pickBtn" type="button" data-pick="accessories">Pick accessories</button></div>
+            <div class="field"><div class="label">Jewelry</div><button class="pickBtn" type="button" data-pick="jewelry">Pick jewelry</button></div>
+          </div>
+
+          <div class="grid2">
+            <div class="field"><div class="label">Piercings</div><button id="pierToggle" class="toggleBtn" type="button" aria-pressed="false">Piercings: OFF</button><input id="pierInput" class="textInput hidden" type="text" placeholder="Type piercings…"></div>
+            <div class="field"><div class="label">Tattoos</div><button id="tatToggle" class="toggleBtn" type="button" aria-pressed="false">Tattoos: OFF</button><input id="tatInput" class="textInput hidden" type="text" placeholder="Type tattoos…"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card hidden" id="sceneCard">
+        <div class="cardTitle">Scene & Style</div>
+        <div class="grid2">
+          <div class="field"><div class="label">Indoor / Outdoor</div><button class="pickBtn" type="button" data-pick="sceneIO">Pick</button></div>
+          <div class="field"><div class="label">Environment</div><button class="pickBtn" type="button" data-pick="environment">Pick environment</button></div>
+        </div>
+
+        <div class="grid2">
+          <div class="field"><div class="label">Time of day</div><button class="pickBtn" type="button" data-pick="timeOfDay">Pick time</button></div>
+          <div class="field"><div class="label">Weather</div><button class="pickBtn" type="button" data-pick="weather">Pick weather</button></div>
+        </div>
+
+        <div class="grid2">
+          <div class="field"><div class="label">Camera angle</div><button class="pickBtn" type="button" data-pick="cameraAngle">Pick angle</button></div>
+          <div class="field"><div class="label">Lighting</div><button class="pickBtn" type="button" data-pick="lighting">Pick lighting</button></div>
+        </div>
+
+        <div class="grid2">
+          <div class="field"><div class="label">Lens / filter</div><button class="pickBtn" type="button" data-pick="lens">Pick lens look</button></div>
+          <div class="field"><div class="label">Mood</div><button class="pickBtn" type="button" data-pick="mood">Pick mood</button></div>
+        </div>
+
+        <div class="field"><div class="label">Scrapbook</div><button id="scrapToggle" class="toggleBtn" type="button" aria-pressed="true">Scrapbook: ON</button></div>
+
+        <div id="scrapFields" class="grid2">
+          <div class="field"><div class="label">Scrapbook level</div><div class="pillGroup" id="scrapLevelPills"></div></div>
+          <div class="field"><div class="label">Scrapbook style</div><button class="pickBtn" type="button" data-pick="scrapStyle">Pick style</button></div>
+        </div>
+
+        <div class="field"><div class="label">Scrapbook elements</div><button class="pickBtn" type="button" data-pick="scrapElements">Pick elements</button></div>
+      </section>
+
+      <section class="card actionCard">
+        <div class="row">
+          <button id="rerollBtn" class="ghostBtn" type="button">REROLL</button>
+          <button id="clearBtn" class="ghostBtn" type="button">CLEAR ALL</button>
+        </div>
+        <button id="goBtn" class="bigBtn" type="button">GET FAUXBULOUS</button>
+        <div class="footer">A Fauxbulous Original by Rebecca Deulen.</div>
+      </section>
+    </main>
+  </div>
+
+  <div id="pickerModal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modalGlass">
+      <div class="modalTop">
+        <div id="pickerTitle" class="modalTitle">Pick</div>
+        <button id="pickerClose" class="miniBtn" type="button">✕</button>
+      </div>
+      <div id="pickerList" class="pickerList" role="listbox"></div>
+      <div id="customBox" class="customBox hidden">
+        <div class="label">Custom</div>
+        <input id="customInput" class="textInput" type="text" placeholder="Type your custom choice…">
+      </div>
+      <div class="modalBottom">
+        <button id="pickerConfirm" class="confirmBtn" type="button">CONFIRM</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="promptModal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modalGlass modalGlassTall">
+      <div class="modalTop">
+        <div class="modalTitle">READY, SET, FAUX</div>
+        <button id="promptClose" class="miniBtn" type="button">✕</button>
+      </div>
+      <textarea id="promptText" class="promptText" readonly></textarea>
+      <div class="modalBottom">
+        <button id="copyBtn" class="confirmBtn" type="button">COPY</button>
+        <button id="promptOk" class="ghostBtn" type="button">CONFIRM</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="welcomeModal" class="modal" role="dialog" aria-modal="true">
+    <div class="modalGlass">
+      <div class="welcomeText">Hi bestie. You’re officially in the Faux Zone. ✨</div>
+      <button id="enterBtn" class="confirmBtn" type="button">ENTER NOW</button>
+    </div>
+  </div>
+
+  <div id="stuckModal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modalGlass modalGlassTall">
+      <div class="modalTop">
+        <div class="modalTitle">Quick Help</div>
+        <button id="stuckClose" class="miniBtn" type="button">✕</button>
+      </div>
+      <div class="letter" id="stuckLetter"></div>
+      <div class="modalBottom">
+        <button id="stuckOk" class="confirmBtn" type="button">OKAY BESTIE</button>
+      </div>
+    </div>
+  </div>
+
+  <script defer src="./script.js"></script>
+</body>
+</html>
