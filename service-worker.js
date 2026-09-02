@@ -1,21 +1,8 @@
-const CACHE_NAME="ai-fauxbulous-v18";
-const ASSETS=["./","./index.html","./style.css","./script.js","./suite-v5.js","./learn-v6.js","./creator-v7.js","./finish-v9.js","./signature-v10.js","./hashtags-v11.js","./ui-v12.js","./ui-v12-fix.js","./ui-v14-patch.js","./spicy-v15.js","./assets/rebecca-recline.webp","./manifest.json","./icons/icon-192.png","./icons/icon-512.png","./icons/apple-touch-icon.png","./icons/favicon-32.png"];
-self.addEventListener("install",e=>e.waitUntil(caches.open(CACHE_NAME).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting())));
-self.addEventListener("activate",e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE_NAME).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
-self.addEventListener("fetch",e=>{
-  if(e.request.method!=="GET")return;
+const CACHE_NAME='ai-fauxbulous-v19-clean';
+self.addEventListener('install',e=>e.waitUntil(self.skipWaiting()));
+self.addEventListener('activate',e=>e.waitUntil((async()=>{const keys=await caches.keys();await Promise.all(keys.map(k=>caches.delete(k)));await self.clients.claim()})()));
+self.addEventListener('fetch',e=>{
+  if(e.request.method!=='GET')return;
   const u=new URL(e.request.url);if(u.origin!==location.origin)return;
-  if(e.request.mode==="navigate"){
-    e.respondWith(fetch(e.request,{cache:"no-store"}).then(async r=>{
-      if(!r.ok)return r;
-      const html=await r.text();
-      const out=new Response(html,{status:r.status,statusText:r.statusText,headers:{"Content-Type":"text/html; charset=utf-8","Cache-Control":"no-store"}});
-      caches.open(CACHE_NAME).then(c=>c.put(e.request,out.clone())).catch(()=>{});
-      return out;
-    }).catch(async()=>await caches.match(e.request)||caches.match("./index.html")));
-    return;
-  }
-  const shell=/\.(?:html|js|css|json)$/.test(u.pathname);
-  if(shell){e.respondWith(fetch(e.request,{cache:"no-store"}).then(r=>{if(r&&r.ok){const cp=r.clone();caches.open(CACHE_NAME).then(c=>c.put(e.request,cp)).catch(()=>{})}return r}).catch(async()=>await caches.match(e.request)||Promise.reject()));return}
-  e.respondWith(caches.match(e.request).then(c=>c||fetch(e.request).then(r=>{if(r&&r.ok){const cp=r.clone();caches.open(CACHE_NAME).then(cache=>cache.put(e.request,cp)).catch(()=>{})}return r})));
+  e.respondWith(fetch(e.request,{cache:'no-store'}).catch(()=>new Response('<!doctype html><meta name="viewport" content="width=device-width,initial-scale=1"><body style="background:#08030d;color:white;font-family:system-ui;padding:24px">Fauxbulous needs a connection for this clean-reset build. Reopen when online.</body>',{headers:{'Content-Type':'text/html; charset=utf-8'}})));
 });
