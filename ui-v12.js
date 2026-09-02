@@ -1,1 +1,2 @@
-/* Retired legacy UI v12. Intentionally empty. Stable UI is ui-v24-stable.js. */
+/* Legacy entry shim: load only the stable V24 controller. */
+(()=>{'use strict';if(document.querySelector('script[data-faux-v24]'))return;const s=document.createElement('script');s.src='./ui-v24-stable.js?v=24';s.defer=true;s.dataset.fauxV24='1';document.head.appendChild(s)})();
