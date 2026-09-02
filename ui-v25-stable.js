@@ -27,6 +27,7 @@ function buildFolds(){resetFolds();fold(cardByTitle('People Setup'),'WHO / SUBJE
 function mark(){$$('.pickBtn').forEach(b=>{const t=(b.textContent||'').trim();b.classList.toggle('fauxSelected',!!t&&!/^(Pick|Choose|Select)(\s|$)/i.test(t))})}
 function setImages(){const cp=$('.creatorPhoto');if(cp)cp.src=CREATOR_SRC;const fp=$('#founderMini img');if(fp)fp.src=WIDE_SRC}
 function cleanAdmin(){$('.suiteTopBtn.owner')?.remove();$('#suiteOwner')?.remove();$$('.learnItem').forEach(i=>{const t=(i.textContent||'').toLowerCase();if(t.includes('owner dashboard')||t.includes('rebecca-only')||t.includes('revocable')||t.includes('revoke')||t.includes('backend'))i.remove()})}
-function boot(){addStyle();makeModeDeck();buildFolds();mark();setImages();cleanAdmin();setMode(getMode())}
-window.addEventListener('DOMContentLoaded',()=>{boot();setTimeout(()=>{setImages();mark();cleanAdmin()},400);document.addEventListener('click',()=>setTimeout(mark,0),true)});
+function boot(){if(window.__fauxV25Booted)return;window.__fauxV25Booted=true;addStyle();makeModeDeck();buildFolds();mark();setImages();cleanAdmin();setMode(getMode());setTimeout(()=>{setImages();mark();cleanAdmin()},500)}
+function ready(){boot();document.addEventListener('click',()=>setTimeout(mark,0),true)}
+if(document.readyState==='loading')window.addEventListener('DOMContentLoaded',ready,{once:true});else ready();
 })();
