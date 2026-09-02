@@ -1,2 +1,2 @@
-/* AI-FAUXBULOUS V24 retired: load V27 stable UI only */
-(()=>{'use strict';if(document.querySelector('script[data-faux-v25]'))return;const s=document.createElement('script');s.src='./ui-v25-stable.js?v=27';s.defer=true;s.dataset.fauxV25='1';document.head.appendChild(s)})();
+/* AI-FAUXBULOUS V24 retired: load V28 stable UI only */
+(()=>{'use strict';if(document.querySelector('script[data-faux-v25]'))return;const s=document.createElement('script');s.src='./ui-v25-stable.js?v=28';s.defer=true;s.dataset.fauxV25='1';document.head.appendChild(s)})();
