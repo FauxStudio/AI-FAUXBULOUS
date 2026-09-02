@@ -1,4 +1,4 @@
-const CACHE_NAME="ai-fauxbulous-v16";
+const CACHE_NAME="ai-fauxbulous-v17";
 const ASSETS=["./","./index.html","./style.css","./script.js","./suite-v5.js","./learn-v6.js","./creator-v7.js","./finish-v9.js","./signature-v10.js","./hashtags-v11.js","./ui-v12.js","./ui-v12-fix.js","./ui-v14-patch.js","./spicy-v15.js","./assets/rebecca-recline.webp","./manifest.json","./icons/icon-192.png","./icons/icon-512.png","./icons/apple-touch-icon.png","./icons/favicon-32.png"];
 self.addEventListener("install",e=>e.waitUntil(caches.open(CACHE_NAME).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting())));
 self.addEventListener("activate",e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE_NAME).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
@@ -17,8 +17,8 @@ self.addEventListener("fetch",e=>{
       if(!html.includes("hashtags-v11.js"))html=html.replace("</body>",'<script defer src="./hashtags-v11.js"></script></body>');
       if(!html.includes("ui-v12.js"))html=html.replace("</body>",'<script defer src="./ui-v12.js"></script></body>');
       if(!html.includes("ui-v12-fix.js"))html=html.replace("</body>",'<script defer src="./ui-v12-fix.js"></script></body>');
-      if(!html.includes("ui-v14-patch.js"))html=html.replace("</body>",'<script defer src="./ui-v14-patch.js?v=16"></script></body>');
-      if(!html.includes("spicy-v15.js"))html=html.replace("</body>",'<script defer src="./spicy-v15.js?v=16"></script></body>');
+      if(!html.includes("ui-v14-patch.js"))html=html.replace("</body>",'<script defer src="./ui-v14-patch.js?v=17"></script></body>');
+      if(!html.includes("spicy-v15.js"))html=html.replace("</body>",'<script defer src="./spicy-v15.js?v=17"></script></body>');
       const out=new Response(html,{status:r.status,statusText:r.statusText,headers:{"Content-Type":"text/html; charset=utf-8","Cache-Control":"no-store"}});
       caches.open(CACHE_NAME).then(c=>c.put(e.request,out.clone())).catch(()=>{});
       return out;
