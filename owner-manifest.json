@@ -1,9 +1,9 @@
 {
   "id": "/AI-FAUXBULOUS/owner",
-  "name": "Rebecca's AI-FAUXBULOUS Owner App",
+  "name": "Rebecca’s AI-FAUXBULOUS Owner App",
   "short_name": "Faux Owner",
-  "description": "Rebecca's private AI-FAUXBULOUS creator and owner workspace.",
-  "start_url": "/AI-FAUXBULOUS/owner.html",
+  "description": "Rebecca’s AI-FAUXBULOUS creator and owner workspace.",
+  "start_url": "/AI-FAUXBULOUS/owner-v36.html",
   "scope": "/AI-FAUXBULOUS/",
   "display": "standalone",
   "orientation": "any",
