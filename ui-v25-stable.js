@@ -1,9 +1,9 @@
-/* AI-FAUXBULOUS stable UI v27 */
+/* AI-FAUXBULOUS stable UI v28 */
 (()=>{'use strict';
 const $=(q,r=document)=>r.querySelector(q),$$=(q,r=document)=>[...r.querySelectorAll(q)];
 const MODE_KEY='faux-ui-mode-v1';
-const CREATOR_SRC='./assets/rebecca-creator-v27.jpg?v=27';
-const WIDE_SRC='./assets/rebecca-wide-v27.jpg?v=27';
+const CREATOR_SRC='./assets/rebecca-creator-v27.jpg?v=28';
+const WIDE_SRC='./assets/rebecca-wide-v27.jpg?v=28';
 const css=`
 #spicyToggle{display:none!important}.fauxLegacyMode{display:none!important}
 .fauxModeDeck{margin:12px 0 18px;padding:14px;border:1px solid #ffffff22;border-radius:24px;background:#120918e8;box-shadow:0 14px 40px #0006}
@@ -12,8 +12,8 @@ const css=`
 .pickBtn.fauxSelected,.segBtn.active,.pill.active,.toggleBtn[aria-pressed=true],.suiteBtn.active,.suitePresets button.active{border-color:#fff!important;background:linear-gradient(135deg,#ff35b9,#7556ff)!important;color:#fff!important;box-shadow:0 0 0 2px #ff66d244,0 0 22px #ff45bf55!important}.pickBtn.fauxSelected:before{content:'✓ ';font-weight:1000}
 body[data-faux-mode=horror] .pickBtn.fauxSelected,body[data-faux-mode=horror] .segBtn.active,body[data-faux-mode=horror] .pill.active,body[data-faux-mode=horror] .toggleBtn[aria-pressed=true]{background:linear-gradient(135deg,#ef234f,#721027)!important}body[data-faux-mode=spicy] .pickBtn.fauxSelected,body[data-faux-mode=spicy] .segBtn.active,body[data-faux-mode=spicy] .pill.active,body[data-faux-mode=spicy] .toggleBtn[aria-pressed=true]{background:linear-gradient(135deg,#ff3b98,#a90e59)!important}
 .creatorCard{grid-template-columns:118px 1fr!important}.creatorPhoto{width:118px!important;height:118px!important;object-fit:cover!important;object-position:center 28%!important;border-radius:25px!important}.creatorName{font-size:15px!important}.creatorSub{font-size:9.5px!important;line-height:1.35!important}
-#founderMini.founderMini{height:auto!important;min-height:0!important;padding:10px!important;background:#07030b!important;overflow:hidden!important}#founderMini.founderMini img{display:block!important;width:100%!important;height:auto!important;aspect-ratio:16/9!important;object-fit:contain!important;object-position:center!important;border-radius:14px!important;background:#07030b!important}#founderMini.founderMini:after{font-size:8px!important;right:14px!important;bottom:14px!important}.suiteTopBtn.owner,#suiteOwner{display:none!important}
-@media(max-width:520px){.topbar{align-items:flex-start!important;gap:8px!important;flex-wrap:wrap!important}.brand{width:100%!important;min-width:0!important}.brandTitle{font-size:20px!important}.topActions{width:100%!important;display:flex!important;justify-content:flex-end!important;gap:7px!important}.miniBtn,.suiteTopBtn{font-size:10px!important;padding:8px 10px!important}.fauxModeBtn{font-size:11px!important;min-height:54px!important}.creatorCard{grid-template-columns:104px 1fr!important}.creatorPhoto{width:104px!important;height:104px!important;object-position:center 26%!important}}
+#founderMini.founderMini{height:auto!important;min-height:0!important;padding:10px!important;background:#07030b!important;overflow:hidden!important}#founderMini.founderMini img{display:block!important;width:100%!important;height:auto!important;aspect-ratio:16/9!important;object-fit:cover!important;object-position:center!important;border-radius:14px!important;background:#07030b!important}#founderMini.founderMini:after{font-size:8px!important;right:14px!important;bottom:14px!important}.suiteTopBtn.owner,#suiteOwner{display:none!important}
+@media(max-width:520px){.topbar{align-items:flex-start!important;gap:8px!important;flex-wrap:wrap!important}.brand{width:100%!important;min-width:0!important}.brandTitle{font-size:20px!important}.topActions{width:100%!important;display:flex!important;justify-content:flex-end!important;gap:7px!important}.miniBtn,.suiteTopBtn{font-size:10px!important;padding:8px 10px!important}.fauxModeBtn{font-size:11px!important;min-height:54px!important}.creatorCard{grid-template-columns:104px 1fr!important}.creatorPhoto{width:104px!important;height:104px!important;object-position:center 25%!important}}
 `;
 function addStyle(){if($('#fauxStableV25'))return;const s=document.createElement('style');s.id='fauxStableV25';s.textContent=css;document.head.appendChild(s)}
 function getMode(){return localStorage.getItem(MODE_KEY)||'normal'}
@@ -25,9 +25,10 @@ function closeFold(b){const c=b.nextElementSibling;if(!c)return;c.style.display=
 function fold(card,label){if(!card)return;const b=document.createElement('button');b.type='button';b.className='fauxFold';b.innerHTML='<span><b>'+label+'</b><br><small>tap to open</small></span><span class="arrow">›</span>';card.before(b);card.style.display='none';b.onclick=()=>{const open=card.style.display==='none';card.style.display=open?'':'none';b.classList.toggle('open',open);b.querySelector('small').textContent=open?'tap to close':'tap to open'}}
 function buildFolds(){resetFolds();fold(cardByTitle('People Setup'),'WHO / SUBJECT');fold($('#personCard'),'LOOK + WARDROBE');fold($('#sceneCard'),'SCENE + CAMERA + LIGHTING')}
 function mark(){$$('.pickBtn').forEach(b=>{const t=(b.textContent||'').trim();b.classList.toggle('fauxSelected',!!t&&!/^(Pick|Choose|Select)(\s|$)/i.test(t))})}
-function setImages(){const cp=$('.creatorPhoto');if(cp){cp.src=CREATOR_SRC;cp.alt='Rebecca Lynn';}const fp=$('#founderMini img');if(fp){fp.src=WIDE_SRC;fp.alt='Rebecca Lynn reclining';}}
+function setImages(){const cp=$('.creatorPhoto');if(cp){cp.src=CREATOR_SRC;cp.alt='Rebecca Lynn';cp.onerror=()=>{cp.style.display='none'}}const fp=$('#founderMini img');if(fp){fp.src=WIDE_SRC;fp.alt='Rebecca Lynn reclining';fp.onerror=()=>{fp.style.display='none'}}}
+function restoreCreatorOnce(){const once='faux-v28-creator-reset-once';if(localStorage.getItem(once))return;localStorage.setItem(once,'1');localStorage.removeItem('faux-creator-card-closed-v20');localStorage.removeItem('faux-hide-cheeky-welcome-v1');}
 function cleanAdmin(){$('.suiteTopBtn.owner')?.remove();$('#suiteOwner')?.remove();$$('.learnItem').forEach(i=>{const t=(i.textContent||'').toLowerCase();if(t.includes('owner dashboard')||t.includes('rebecca-only')||t.includes('revocable')||t.includes('revoke')||t.includes('backend'))i.remove()})}
-function boot(){if(window.__fauxV25Booted)return;window.__fauxV25Booted=true;addStyle();makeModeDeck();buildFolds();mark();setImages();cleanAdmin();setMode(getMode());setTimeout(()=>{setImages();mark();cleanAdmin()},500)}
+function boot(){if(window.__fauxV25Booted)return;window.__fauxV25Booted=true;restoreCreatorOnce();addStyle();makeModeDeck();buildFolds();mark();setImages();cleanAdmin();setMode(getMode());setTimeout(()=>{setImages();mark();cleanAdmin()},500)}
 function ready(){boot();document.addEventListener('click',()=>setTimeout(mark,0),true)}
 if(document.readyState==='loading')window.addEventListener('DOMContentLoaded',ready,{once:true});else ready();
 })();
