@@ -1,4 +1,4 @@
-const CACHE_NAME="ai-fauxbulous-v2";
+const CACHE_NAME="ai-fauxbulous-v3";
 const ASSETS=["./","./index.html","./style.css","./script.js","./manifest.json","./icons/icon-192.png","./icons/icon-512.png","./icons/apple-touch-icon.png","./icons/favicon-32.png"];
 
 self.addEventListener("install",event=>{
@@ -22,11 +22,13 @@ self.addEventListener("fetch",event=>{
   if(request.method!=="GET") return;
 
   const url=new URL(request.url);
+  if(url.origin!==self.location.origin) return;
+
   const isAppShell=request.mode==="navigate" || /\.(?:html|js|css|json)$/.test(url.pathname);
 
   if(isAppShell){
     event.respondWith(
-      fetch(request)
+      fetch(request,{cache:"no-store"})
         .then(response=>{
           if(response && response.ok){
             const copy=response.clone();
@@ -34,7 +36,12 @@ self.addEventListener("fetch",event=>{
           }
           return response;
         })
-        .catch(()=>caches.match(request).then(cached=>cached || caches.match("./index.html")))
+        .catch(async()=>{
+          const cached=await caches.match(request);
+          if(cached) return cached;
+          if(request.mode==="navigate") return caches.match("./index.html");
+          throw new Error("Offline asset unavailable");
+        })
     );
     return;
   }
