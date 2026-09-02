@@ -1,5 +1,5 @@
-const CACHE_NAME="ai-fauxbulous-v7";
-const ASSETS=["./","./index.html","./style.css","./script.js","./suite-v5.js","./learn-v6.js","./creator-v7.js","./manifest.json","./icons/icon-192.png","./icons/icon-512.png","./icons/apple-touch-icon.png","./icons/favicon-32.png"];
+const CACHE_NAME="ai-fauxbulous-v8";
+const ASSETS=["./","./index.html","./style.css","./script.js","./suite-v5.js","./learn-v6.js","./creator-v7.js","./assets/rebecca-recline.webp","./manifest.json","./icons/icon-192.png","./icons/icon-512.png","./icons/apple-touch-icon.png","./icons/favicon-32.png"];
 self.addEventListener("install",e=>e.waitUntil(caches.open(CACHE_NAME).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting())));
 self.addEventListener("activate",e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE_NAME).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
 self.addEventListener("fetch",e=>{
