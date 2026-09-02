@@ -1,0 +1,17 @@
+{
+  "id": "/AI-FAUXBULOUS/owner",
+  "name": "AI-FAUXBULOUS Owner",
+  "short_name": "Faux Owner",
+  "description": "Rebecca's AI-FAUXBULOUS creator and owner workspace.",
+  "start_url": "/AI-FAUXBULOUS/owner.html",
+  "scope": "/AI-FAUXBULOUS/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#08030d",
+  "theme_color": "#100616",
+  "categories": ["photo", "lifestyle", "utilities"],
+  "icons": [
+    {"src":"./icons/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any"},
+    {"src":"./icons/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any"}
+  ]
+}
