@@ -1,9 +1,9 @@
-/* AI-FAUXBULOUS stable UI v25 */
+/* AI-FAUXBULOUS stable UI v26 */
 (()=>{'use strict';
 const $=(q,r=document)=>r.querySelector(q),$$=(q,r=document)=>[...r.querySelectorAll(q)];
 const MODE_KEY='faux-ui-mode-v1';
-const CREATOR_SRC='./assets/rebecca-creator-v25.webp';
-const WIDE_SRC='./assets/rebecca-wide-v25.webp';
+const CREATOR_SRC='./assets/rebecca-creator-v25.jpg?v=26';
+const WIDE_SRC='./assets/rebecca-wide-v25.jpg?v=26';
 const css=`
 #spicyToggle{display:none!important}.fauxLegacyMode{display:none!important}
 .fauxModeDeck{margin:12px 0 18px;padding:14px;border:1px solid #ffffff22;border-radius:24px;background:#120918e8;box-shadow:0 14px 40px #0006}
@@ -25,7 +25,7 @@ function closeFold(b){const c=b.nextElementSibling;if(!c)return;c.style.display=
 function fold(card,label){if(!card)return;const b=document.createElement('button');b.type='button';b.className='fauxFold';b.innerHTML='<span><b>'+label+'</b><br><small>tap to open</small></span><span class="arrow">›</span>';card.before(b);card.style.display='none';b.onclick=()=>{const open=card.style.display==='none';card.style.display=open?'':'none';b.classList.toggle('open',open);b.querySelector('small').textContent=open?'tap to close':'tap to open'}}
 function buildFolds(){resetFolds();fold(cardByTitle('People Setup'),'WHO / SUBJECT');fold($('#personCard'),'LOOK + WARDROBE');fold($('#sceneCard'),'SCENE + CAMERA + LIGHTING')}
 function mark(){$$('.pickBtn').forEach(b=>{const t=(b.textContent||'').trim();b.classList.toggle('fauxSelected',!!t&&!/^(Pick|Choose|Select)(\s|$)/i.test(t))})}
-function setImages(){const cp=$('.creatorPhoto');if(cp)cp.src=CREATOR_SRC;const fp=$('#founderMini img');if(fp)fp.src=WIDE_SRC}
+function setImages(){const cp=$('.creatorPhoto');if(cp){cp.src=CREATOR_SRC;cp.alt='Rebecca Lynn';}const fp=$('#founderMini img');if(fp){fp.src=WIDE_SRC;fp.alt='Rebecca Lynn reclining';}}
 function cleanAdmin(){$('.suiteTopBtn.owner')?.remove();$('#suiteOwner')?.remove();$$('.learnItem').forEach(i=>{const t=(i.textContent||'').toLowerCase();if(t.includes('owner dashboard')||t.includes('rebecca-only')||t.includes('revocable')||t.includes('revoke')||t.includes('backend'))i.remove()})}
 function boot(){if(window.__fauxV25Booted)return;window.__fauxV25Booted=true;addStyle();makeModeDeck();buildFolds();mark();setImages();cleanAdmin();setMode(getMode());setTimeout(()=>{setImages();mark();cleanAdmin()},500)}
 function ready(){boot();document.addEventListener('click',()=>setTimeout(mark,0),true)}
