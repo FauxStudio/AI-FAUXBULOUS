@@ -1,27 +1,18 @@
 {
   "id": "./",
   "name": "AI-FAUXBULOUS",
-  "short_name": "FAUX",
-  "description": "A Fauxbulous custom AI image prompt builder by Rebecca Deulen.",
+  "short_name": "Fauxbulous",
+  "description": "Invite-only AI image prompt builder by Rebecca Lynn.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone"],
   "orientation": "any",
-  "background_color": "#07040c",
-  "theme_color": "#14081f",
+  "background_color": "#08030d",
+  "theme_color": "#100616",
   "categories": ["photo", "lifestyle", "utilities"],
   "icons": [
-    {
-      "src": "./icons/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "./icons/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    }
+    {"src":"./icons/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},
+    {"src":"./icons/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
   ]
 }
