@@ -1,42 +1,30 @@
-/* AI-FAUXBULOUS visible UI patch v14 */
+/* AI-FAUXBULOUS recovery + visible UI patch v16 */
 (()=>{'use strict';
 const $=(q,r=document)=>r.querySelector(q),$$=(q,r=document)=>[...r.querySelectorAll(q)];
+const MODE_KEY='faux-ui-mode-v1',SIG_KEY='faux-personal-signature-v1';
 const css=`
-/* V14: keep mode bar clear of the header on phones */
-.modeDock{position:relative!important;top:auto!important;z-index:20!important;margin:10px 0 14px!important}
-.topbar{z-index:60!important}
-@media(max-width:600px){.topbar{position:relative!important}.modeDock{position:relative!important;top:auto!important}.creatorCard{margin-top:0!important}}
-/* mode changes should be unmistakable */
-body[data-faux-mode="normal"]{background:#0b0610!important}
-body[data-faux-mode="horror"]{background:radial-gradient(circle at 50% -10%,#4b0715 0,#130308 34%,#050204 78%) fixed!important}
-body[data-faux-mode="horror"] .card{border-color:#8f1a32!important;background:linear-gradient(180deg,#1d070d,#090306)!important;box-shadow:0 12px 35px #0009,0 0 22px #a20e2d22!important}
-body[data-faux-mode="horror"] .brandTitle,body[data-faux-mode="horror"] .heroTitle span{color:#ff4968!important;text-shadow:0 0 20px #d80f3666}
-body[data-faux-mode="horror"] .modeDock{background:linear-gradient(180deg,#23070e,#080204)!important;border-color:#a21b35!important}
-body[data-faux-mode="spicy"]{background:radial-gradient(circle at 50% -10%,#5c0733 0,#18030e 36%,#060204 80%) fixed!important}
-body[data-faux-mode="spicy"] .card{border-color:#7f2255!important;background:linear-gradient(180deg,#240817,#0b0308)!important;box-shadow:0 12px 35px #0009,0 0 22px #ff3b9220!important}
-body[data-faux-mode="spicy"] .brandTitle,body[data-faux-mode="spicy"] .heroTitle span{color:#ff5aa8!important;text-shadow:0 0 20px #ff3b9255}
-body[data-faux-mode="spicy"] .modeDock{background:linear-gradient(180deg,#2b071b,#090205)!important;border-color:#b92e6f!important}
-.modeBtn[data-mode="horror"]{color:#ffdbe2}.modeBtn[data-mode="spicy"]{color:#ffe1ef}.modeBtn[data-mode="normal"]{color:#f4e7ff}
-/* collapsed cards are visibly compact */
-.smartSection.sectionCollapsed{padding-bottom:12px!important}
-.smartSection.sectionCollapsed .smartBody{display:none!important}
-.smartSection.sectionCollapsed .smartHead{min-height:34px!important}
-.smartSection.sectionCollapsed .smartSummary{display:block!important}
-.smartSection.sectionCollapsed .smartChevron{transform:rotate(-90deg)!important}
-/* creator images must never collapse to zero */
-.creatorCard{min-height:96px!important}
-.creatorPhoto{display:block!important;visibility:visible!important;opacity:1!important}
-.fauxFounderFrame{display:block!important;visibility:visible!important;opacity:1!important}
-.fauxFounderImage{display:block!important;visibility:visible!important;opacity:.98!important}
-/* remove legacy spicy control once the 3-mode bar exists */
+.modeDock{position:relative!important;top:auto!important;z-index:20!important;margin:10px 0 14px!important;padding:9px!important;border:1px solid #ffffff25!important;border-radius:20px!important;background:#0b0610ee!important;backdrop-filter:blur(18px)}
+.modeBtns{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:7px!important}.modeBtn{display:block!important;min-height:48px!important;border:1px solid #ffffff2c!important;background:#ffffff09!important;color:#fff!important;border-radius:15px!important;padding:11px 5px!important;font-size:11px!important;font-weight:900!important;letter-spacing:.5px!important}.modeBtn.active{border-color:var(--modeA,#ff5bd8)!important;background:linear-gradient(135deg,var(--modeA,#ff5bd8),var(--modeB,#7d6cff))!important;box-shadow:0 0 22px var(--modeGlow,#ff5bd844)!important}.modeChip{margin-top:7px!important;font-size:9px!important;font-weight:900!important;text-align:center!important;color:#ffffffaa!important}
+.topbar{z-index:60!important}@media(max-width:600px){.topbar{position:relative!important}.modeBtn{font-size:10px!important;padding:10px 3px!important}}
+body[data-faux-mode="normal"]{--modeA:#ff5bd8;--modeB:#7d6cff;--modeGlow:#ff5bd844;background:#0b0610!important}
+body[data-faux-mode="horror"]{--modeA:#e61a3d;--modeB:#5d0a20;--modeGlow:#e61a3d55;background:radial-gradient(circle at 50% -10%,#4b0715 0,#130308 34%,#050204 78%) fixed!important}
+body[data-faux-mode="horror"] .card{border-color:#8f1a32!important;background:linear-gradient(180deg,#1d070d,#090306)!important;box-shadow:0 12px 35px #0009,0 0 22px #a20e2d22!important}body[data-faux-mode="horror"] .brandTitle,body[data-faux-mode="horror"] .heroTitle span{color:#ff4968!important;text-shadow:0 0 20px #d80f3666}
+body[data-faux-mode="spicy"]{--modeA:#ff3b92;--modeB:#8a0b45;--modeGlow:#ff3b9255;background:radial-gradient(circle at 50% -10%,#5c0733 0,#18030e 36%,#060204 80%) fixed!important}
+body[data-faux-mode="spicy"] .card{border-color:#8a245c!important;background:linear-gradient(180deg,#290819,#0b0308)!important;box-shadow:0 12px 35px #0009,0 0 24px #ff3b9228!important}body[data-faux-mode="spicy"] .brandTitle,body[data-faux-mode="spicy"] .heroTitle span{color:#ff5aa8!important;text-shadow:0 0 20px #ff3b9255}
+.smartSection.sectionCollapsed .smartBody{display:none!important}.smartSection.sectionCollapsed{padding-bottom:12px!important}.smartSection.sectionCollapsed .smartChevron{transform:rotate(-90deg)!important}
+.creatorCard{display:grid!important;grid-template-columns:82px 1fr!important;gap:13px!important;align-items:center!important;min-height:96px!important}.creatorPhoto{display:block!important;width:82px!important;height:82px!important;object-fit:cover!important;border-radius:22px!important;visibility:visible!important;opacity:1!important}.fauxFounderFrame,.fauxFounderImage{display:block!important;visibility:visible!important;opacity:.98!important}
 body:has(#modeDock) #spicyToggle,body:has(#modeDock) #spicyNote{display:none!important}
 `;
-function installCss(){if($('#v14Style'))return;const s=document.createElement('style');s.id='v14Style';s.textContent=css;document.head.appendChild(s)}
-function ensureModeVisibility(){const dock=$('#modeDock');if(!dock)return false;dock.style.display='block';$$('.modeBtn',dock).forEach(b=>b.style.display='block');return true}
-function collapseDefault(){const cards=$$('.smartSection');if(!cards.length)return false;cards.forEach(c=>{c.classList.add('sectionCollapsed');c.classList.remove('sectionOpen')});return true}
-function ensureCreator(){const img=$('.creatorPhoto'),founder=$('.fauxFounderImage');[img,founder].forEach(el=>{if(!el)return;el.src='./assets/rebecca-recline.webp?v=15';el.onerror=()=>{el.onerror=null;el.src='./icons/icon-192.png'}})}
-function patchModeButtons(){const dock=$('#modeDock');if(!dock)return;const labels={normal:'✨ NORMAL',horror:'👁 HORROR',spicy:'🔥 SPICY'};$$('.modeBtn',dock).forEach(b=>b.textContent=labels[b.dataset.mode]||b.textContent);}
-function loadSpicyV15(){if($('#spicyV15Loader'))return;const s=document.createElement('script');s.id='spicyV15Loader';s.src='./spicy-v15.js?v=15';s.defer=true;document.head.appendChild(s)}
-function run(){installCss();ensureModeVisibility();patchModeButtons();collapseDefault();ensureCreator();loadSpicyV15();}
-window.addEventListener('DOMContentLoaded',()=>{setTimeout(run,180);setTimeout(run,700)});
+function installCss(){let s=$('#v16RecoveryStyle');if(!s){s=document.createElement('style');s.id='v16RecoveryStyle';s.textContent=css;document.head.appendChild(s)}}
+function loadSpicy(){if($('#spicyV15Loader'))return;const s=document.createElement('script');s.id='spicyV15Loader';s.src='./spicy-v15.js?v=16';s.defer=true;document.head.appendChild(s)}
+function setMode(m){localStorage.setItem(MODE_KEY,m);document.body.dataset.fauxMode=m;$$('.modeBtn').forEach(b=>b.classList.toggle('active',b.dataset.mode===m));const chip=$('#modeChip');if(chip)chip.textContent=m==='horror'?'HORROR MODE · cinematic fear, practical SFX + psychological dread':m==='spicy'?'SPICY MODE · clearly adult, sultry, luxe + non-explicit':'NORMAL MODE · glam, editorial, cinematic + creative';const go=$('#goBtn');if(go)go.textContent=m==='horror'?'SCARE ME':m==='spicy'?'MAKE IT SPICY':'GET FAUXBULOUS';const legacy=$('#spicyToggle'),on=legacy?.getAttribute('aria-pressed')==='true';if(m==='spicy'&&!on)legacy?.click();if(m!=='spicy'&&on)legacy?.click();if(m==='spicy')loadSpicy()}
+function ensureModeDock(){let dock=$('#modeDock');if(!dock){dock=document.createElement('section');dock.id='modeDock';dock.className='modeDock';dock.innerHTML='<div class="modeBtns"><button class="modeBtn" data-mode="normal" type="button">✨ NORMAL</button><button class="modeBtn" data-mode="horror" type="button">👁 HORROR</button><button class="modeBtn" data-mode="spicy" type="button">🔥 SPICY</button></div><div id="modeChip" class="modeChip"></div>';const hero=$('.hero');hero?hero.after(dock):$('#content')?.prepend(dock)}$$('.modeBtn',dock).forEach(b=>{if(!b.dataset.v16){b.dataset.v16='1';b.addEventListener('click',()=>setMode(b.dataset.mode))}});setMode(localStorage.getItem(MODE_KEY)||'normal')}
+function ensureCreator(){const content=$('#content');if(!content)return;if(!$('#creatorCard')){const c=document.createElement('section');c.id='creatorCard';c.className='card creatorCard';c.innerHTML='<img class="creatorPhoto" src="./assets/rebecca-recline.webp?v=16" alt="Rebecca Lynn"><div><div style="font-size:9px;letter-spacing:1.5px;color:#ffffff88;font-weight:900">THE HUMAN BEHIND THE FAUX</div><div style="font-size:17px;font-weight:900;margin:3px 0">Brought to you by Rebecca Lynn / Fauxbulous</div><div style="font-size:11px;color:#ffffffa8;line-height:1.4">Built for people who want better AI image prompts without seventeen browser tabs.</div></div>';const dock=$('#modeDock'),hero=$('.hero');dock?dock.after(c):hero?.after(c)}const img=$('.creatorPhoto');if(img){img.src='./assets/rebecca-recline.webp?v=16';img.onerror=()=>{img.onerror=null;img.src='./icons/icon-192.png'}}const action=$('.actionCard');if(action&&!$('#fauxFounderFrame')){const f=document.createElement('div');f.id='fauxFounderFrame';f.className='fauxFounderFrame';f.innerHTML='<img class="fauxFounderImage" src="./assets/rebecca-recline.webp?v=16" alt="Rebecca Lynn"><div class="fauxFounderTag">REBECCA LYNN · FAUXBULOUS</div>';action.prepend(f)}}
+function collapseSmart(){const cards=$$('.smartSection');cards.forEach(c=>{c.classList.add('sectionCollapsed');c.classList.remove('sectionOpen')})}
+function cleanTag(s){return String(s||'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Za-z0-9]/g,'').slice(0,45)}
+function imageTags(t){const mode=localStorage.getItem(MODE_KEY)||'normal',out=[];const rules=mode==='horror'?[[/psychological|uncanny|liminal|paranoia/i,'#PsychologicalHorror'],[/practical|prosthetic|slasher|stage blood|body horror/i,'#PracticalHorror'],[/haunted|supernatural|possession|ghost/i,'#HauntedAesthetic'],[/creature|monster|demon/i,'#CreatureHorror'],[/./,'#CinematicHorror']]:mode==='spicy'?[[/boudoir|satin|lace|velvet/i,'#LuxuryBoudoir'],[/night|after-dark|hotel|lounge/i,'#AfterDarkGlam'],[/editorial|fashion|couture/i,'#SultryEditorial'],[/./,'#SpicyEditorial']]:[[/fashion|editorial|couture/i,'#FashionEditorial'],[/glam|makeup|beauty/i,'#GlamPortrait'],[/night|blue hour|twilight/i,'#AfterDarkPortrait'],[/fantasy|witch|angel|mermaid/i,'#FantasyPortrait'],[/./,'#UltraPhotorealistic']];for(const [rx,tag] of rules){if(rx.test(t)&&!out.includes(tag))out.push(tag);if(out.length===2)break}while(out.length<2)out.push(out.length?'#CreativePortrait':'#UltraPhotorealistic');return out.slice(0,2)}
+function forceHashtags(){const ta=$('#promptText');if(!ta||!ta.value.trim())return;let text=ta.value.replace(/\n*#rebeccalynndeulen\s+#[A-Za-z0-9]+\s+#AIFauxbulous\s+#[A-Za-z0-9]+\s+#[A-Za-z0-9]+\s*$/i,'').trimEnd();const sig='#'+(cleanTag(localStorage.getItem(SIG_KEY)||'Rebecca Lynn')||'RebeccaLynn');const tags=['#rebeccalynndeulen',sig,'#AIFauxbulous',...imageTags(text)];ta.value=text+'\n\n'+tags.slice(0,5).join(' ')}
+function bindPrompt(){const go=$('#goBtn');if(!go||go.dataset.v16)return;go.dataset.v16='1';go.addEventListener('click',()=>{[20,80,180,350].forEach(ms=>setTimeout(forceHashtags,ms))})}
+function run(){installCss();ensureModeDock();ensureCreator();collapseSmart();bindPrompt()}
+window.addEventListener('DOMContentLoaded',()=>{setTimeout(run,80);setTimeout(run,350);setTimeout(run,900)});
 })();
