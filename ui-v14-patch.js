@@ -34,8 +34,9 @@ body:has(#modeDock) #spicyToggle,body:has(#modeDock) #spicyNote{display:none!imp
 function installCss(){if($('#v14Style'))return;const s=document.createElement('style');s.id='v14Style';s.textContent=css;document.head.appendChild(s)}
 function ensureModeVisibility(){const dock=$('#modeDock');if(!dock)return false;dock.style.display='block';$$('.modeBtn',dock).forEach(b=>b.style.display='block');return true}
 function collapseDefault(){const cards=$$('.smartSection');if(!cards.length)return false;cards.forEach(c=>{c.classList.add('sectionCollapsed');c.classList.remove('sectionOpen')});return true}
-function ensureCreator(){const img=$('.creatorPhoto'),founder=$('.fauxFounderImage');[img,founder].forEach(el=>{if(!el)return;el.src='./assets/rebecca-recline.webp?v=14';el.onerror=()=>{el.onerror=null;el.src='./icons/icon-192.png'}})}
+function ensureCreator(){const img=$('.creatorPhoto'),founder=$('.fauxFounderImage');[img,founder].forEach(el=>{if(!el)return;el.src='./assets/rebecca-recline.webp?v=15';el.onerror=()=>{el.onerror=null;el.src='./icons/icon-192.png'}})}
 function patchModeButtons(){const dock=$('#modeDock');if(!dock)return;const labels={normal:'✨ NORMAL',horror:'👁 HORROR',spicy:'🔥 SPICY'};$$('.modeBtn',dock).forEach(b=>b.textContent=labels[b.dataset.mode]||b.textContent);}
-function run(){installCss();ensureModeVisibility();patchModeButtons();collapseDefault();ensureCreator();}
+function loadSpicyV15(){if($('#spicyV15Loader'))return;const s=document.createElement('script');s.id='spicyV15Loader';s.src='./spicy-v15.js?v=15';s.defer=true;document.head.appendChild(s)}
+function run(){installCss();ensureModeVisibility();patchModeButtons();collapseDefault();ensureCreator();loadSpicyV15();}
 window.addEventListener('DOMContentLoaded',()=>{setTimeout(run,180);setTimeout(run,700)});
 })();
